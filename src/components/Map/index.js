@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import MapView from 'react-native-maps';
+import Search from '../Search';
 import {View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 
@@ -43,6 +44,7 @@ export default function Map() {
         showsUserLocation
         loadingEnabled
       />
+      <Search />
     </View>
   );
 }
