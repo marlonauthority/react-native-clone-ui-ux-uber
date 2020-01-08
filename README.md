@@ -14,4 +14,4 @@
 - Volte para Menu -> APIs e serviços -> Biblioteca
 - Ative **Place API**, **Directions API**, **Geocoding API**
 
-<img src="example.gif" alt="exemplo" />
+<img src="example.gif" alt="exemplo" height="600" />
