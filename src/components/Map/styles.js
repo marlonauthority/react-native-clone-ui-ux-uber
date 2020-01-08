@@ -45,3 +45,12 @@ export const LocationTimeBoxSmall = styled.Text`
   text-align: center;
   text-transform: uppercase;
 `;
+
+export const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: ${Platform.select({
+    ios: 60,
+    android: 40,
+  })};
+  left: 20px;
+`;

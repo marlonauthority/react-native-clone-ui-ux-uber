@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import {Image, View} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {Marker} from 'react-native-maps';
 
 import Search from '../Search';
 import Directions from '../Directions';
+import Details from '../Details';
+
 import {getPixelSize} from '../../utils';
 
-import {View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 
 import markerImage from '../../assets/marker.png';
+import backImage from '../../assets/back.png';
 
 import {
   LocationBox,
@@ -17,6 +20,7 @@ import {
   LocationTimeBox,
   LocationTimeBoxText,
   LocationTimeBoxSmall,
+  BackButton,
 } from './styles';
 
 Geocoder.init('AIzaSyDWHYO5X0PXMBiMFvaENN4iXtVBdHccHEc');
@@ -67,6 +71,10 @@ export default function Map() {
     });
   }
 
+  function handleBack() {
+    setDestination(null);
+  }
+
   return (
     <View style={{flex: 1}}>
       <MapView
@@ -84,10 +92,10 @@ export default function Map() {
                 setDuration(Math.floor(result.duration));
                 this.mapView.fitToCoordinates(result.coordinates, {
                   edgePadding: {
-                    right: getPixelSize(70),
-                    left: getPixelSize(70),
-                    top: getPixelSize(70),
-                    bottom: getPixelSize(70),
+                    right: getPixelSize(50),
+                    left: getPixelSize(50),
+                    top: getPixelSize(50),
+                    bottom: getPixelSize(350),
                   },
                 });
               }}
@@ -113,7 +121,17 @@ export default function Map() {
           </>
         )}
       </MapView>
-      <Search onLocationSelected={handleLocationSelected} />
+
+      {destination ? (
+        <>
+          <BackButton onPress={handleBack}>
+            <Image source={backImage} />
+          </BackButton>
+          <Details />
+        </>
+      ) : (
+        <Search onLocationSelected={handleLocationSelected} />
+      )}
     </View>
   );
 }
