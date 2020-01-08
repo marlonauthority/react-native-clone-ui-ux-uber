@@ -43,4 +43,5 @@ export const LocationTimeBoxSmall = styled.Text`
   color: #fff;
   font-size: 10px;
   text-align: center;
+  text-transform: uppercase;
 `;

@@ -24,11 +24,17 @@ Geocoder.init('AIzaSyDWHYO5X0PXMBiMFvaENN4iXtVBdHccHEc');
 export default function Map() {
   const [region, setRegion] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [location, setLocation] = useState(null);
 
   function getPositionUser() {
     Geolocation.getCurrentPosition(
-      // navigator.geolocation.getCurrentPosition(
-      ({coords: {latitude, longitude}}) => {
+      async ({coords: {latitude, longitude}}) => {
+        const response = await Geocoder.from({latitude, longitude});
+        const address = response.results[0].formatted_address;
+        const location = address.substring(0, address.indexOf(','));
+        setLocation(location);
+
         setRegion({
           latitude,
           longitude,
@@ -75,12 +81,13 @@ export default function Map() {
               origin={region}
               destination={destination}
               onReady={result => {
+                setDuration(Math.floor(result.duration));
                 this.mapView.fitToCoordinates(result.coordinates, {
                   edgePadding: {
-                    right: getPixelSize(50),
-                    left: getPixelSize(50),
-                    top: getPixelSize(50),
-                    bottom: getPixelSize(50),
+                    right: getPixelSize(70),
+                    left: getPixelSize(70),
+                    top: getPixelSize(70),
+                    bottom: getPixelSize(70),
                   },
                 });
               }}
@@ -97,10 +104,10 @@ export default function Map() {
             <Marker coordinate={region} anchor={{x: 0, y: 0}}>
               <LocationBox>
                 <LocationTimeBox>
-                  <LocationTimeBoxText>10</LocationTimeBoxText>
+                  <LocationTimeBoxText>{duration}</LocationTimeBoxText>
                   <LocationTimeBoxSmall>min</LocationTimeBoxSmall>
                 </LocationTimeBox>
-                <LocationText>Av. Florianópolis</LocationText>
+                <LocationText>{location}</LocationText>
               </LocationBox>
             </Marker>
           </>
